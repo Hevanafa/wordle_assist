@@ -86,7 +86,9 @@ end;
 
 procedure TForm1.SearchButtonClick(Sender: TObject);
 var
-  includeTerm: string;
+  greenTerm, includeTerm: string;
+  a: word;
+  skip: boolean;
   c: char;
   entry: string;
   currentWordList, nextWordList: TStringList;
@@ -96,13 +98,36 @@ begin
     exit
   end;
 
-  includeTerm := upperCase(IncludesEdit.text);
-
   currentWordList := TStringList.create;
   currentWordList.assign(wordList);
   nextWordList := TStringList.create;
 
   ResultsMemo.lines.clear;
+
+  { Correct letters }
+  greenTerm := upperCase(GreenEdit.text);
+  
+  for entry in currentWordList do begin
+    skip := false;
+    
+    for a:=1 to length(greenTerm) do
+      if greenTerm[a] in ['A'..'Z'] then
+        if entry[a] <> greenTerm[a] then begin
+          skip := true;
+          break
+        end;
+
+    if skip then continue;
+
+    nextWordList.add(entry)
+  end;
+
+  currentWordList.clear;
+  currentWordList.assign(nextWordList);
+  nextWordList.clear;
+
+  { Included letters }
+  includeTerm := upperCase(IncludesEdit.text);
 
   for c in includeTerm do begin
     nextWordList.clear;

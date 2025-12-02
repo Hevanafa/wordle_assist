@@ -1,6 +1,9 @@
 # Lazarus stuff
 backup/
+lib/x86_64-win64/
+*.exe
 
 # Word lists
 TWL06.txt
 words_5letters.txt
+

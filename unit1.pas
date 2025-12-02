@@ -141,16 +141,26 @@ begin
     currentWordList.assign(nextWordList);
   end;
 
-  { TODO: Excluded letters }
+  { Excluded letters }
   excludeTerm := upperCase(ExcludesEdit.text);
+  nextWordList.clear;
 
-  for c in excludeTerm do
-    for entry in currentWordList do
+  for entry in currentWordList do begin
+    skip := false;
+
+    for c in excludeTerm do
       if pos(c, entry) > 0 then begin
-        idx := currentWordList.indexOf(entry);
-        currentWordList.delete(idx);
+        skip := true;
         break
       end;
+
+    if not skip then
+      nextWordList.add(entry);
+  end;
+
+  currentWordList.clear;
+  currentWordList.assign(nextWordList);
+
 
   { Result }
   ResultCountLabel.caption := 'Found ' + intToStr(currentWordList.count) + ' words';

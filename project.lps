@@ -9,9 +9,7 @@
         <Filename Value="project.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
+        <CursorPos X="31" Y="11"/>
         <UsageCount Value="20"/>
       </Unit>
       <Unit>
@@ -23,7 +21,7 @@
         <UnitName Value="Unit1"/>
         <IsVisibleTab Value="True"/>
         <TopLine Value="137"/>
-        <CursorPos X="31" Y="154"/>
+        <CursorPos X="54" Y="151"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>

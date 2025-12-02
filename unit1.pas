@@ -33,6 +33,7 @@ type
     wordList: TStringList;
     function validateEmpty: boolean;
     function validateGreenTerm: boolean;
+    function validateLettersOnly(const term: string): boolean;
   public
 
   end;
@@ -104,28 +105,15 @@ begin
     end;
 end;
 
-function TForm1.validateIncludeTerm: boolean;
+function TForm1.validateLettersOnly(const term: string): boolean;
 var
   c: char;
 begin
-  validateIncludeTerm := true;
+  validateLettersOnly := true;
 
-  for c in lowerCase(IncludesEdit.text) do
+  for c in lowerCase(term) do
     if not (c in ['a'..'z']) then begin
-      validateIncludeTerm := false;
-      exit
-    end;
-end;
-
-function TForm1.validateExcludeTerm: boolean;
-var
-  c: char;
-begin
-  validateExcludeTerm := true;
-
-  for c in lowerCase(IncludesEdit.text) do
-    if not (c in ['a'..'z']) then begin
-      validateExcludeTerm := false;
+      validateLettersOnly := false;
       exit
     end;
 end;
@@ -139,6 +127,7 @@ var
   entry: string;
   currentWordList, nextWordList: TStringList;
 begin
+  { Handle validation }
   if not validateEmpty then begin
     showMessage('At least 1 input box must be filled');
     exit
@@ -150,18 +139,17 @@ begin
     exit
   end;
 
-  if not validateIncludeTerm then begin
+  if not validateLettersOnly(IncludesEdit.text) then begin
     showMessage('Only letters are allowed');
     IncludesEdit.setFocus;
     exit
   end;
 
-  if not validateExcludeTerm then begin
+  if not validateLettersOnly(ExcludesEdit.text) then begin
     showMessage('Only letters are allowed');
     ExcludesEdit.setFocus;
     exit
   end;
-
 
   currentWordList := TStringList.create;
   currentWordList.assign(wordList);

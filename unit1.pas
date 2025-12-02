@@ -12,6 +12,7 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    ClearButton: TButton;
     Label1: TLabel;
     GuideLabel: TLabel;
     Label3: TLabel;
@@ -22,12 +23,10 @@ type
     IncludesEdit: TEdit;
     GreenEdit: TEdit;
     ResultsMemo: TMemo;
+    procedure ClearButtonClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure GuideLabelClick(Sender: TObject);
-    procedure Label3Click(Sender: TObject);
-    procedure Label4Click(Sender: TObject);
     procedure SearchButtonClick(Sender: TObject);
   private
     wordList: TStringList;
@@ -58,6 +57,14 @@ begin
   wordList := nil;
 end;
 
+procedure TForm1.ClearButtonClick(Sender: TObject);
+begin
+  GreenEdit.clear;
+  IncludesEdit.clear;
+  ExcludesEdit.clear;
+  ResultsMemo.clear
+end;
+
 procedure TForm1.FormShow(Sender: TObject);
 begin
   wordList := TStringList.create;
@@ -70,21 +77,6 @@ begin
   end;
 
   { showMessage('Loaded ' + intToStr(wordlist.count) + ' words') }
-end;
-
-procedure TForm1.GuideLabelClick(Sender: TObject);
-begin
-
-end;
-
-procedure TForm1.Label3Click(Sender: TObject);
-begin
-
-end;
-
-procedure TForm1.Label4Click(Sender: TObject);
-begin
-
 end;
 
 function TForm1.validateEmpty: boolean;

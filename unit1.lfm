@@ -71,7 +71,6 @@ object Form1: TForm1
     AutoSize = False
     Caption = 'Use underscores if you''re not sure what letter it is'#13#10#13#10'Examples:'#13#10'_I_C'#13#10'_A_E_'#13#10'H_I'#13#10#13#10'Uppercase or lowercase? Doesn''t matter'#13#10#13#10'Included letters: Letters in yellow'#13#10'Excluded letters: Letters in grey'
     WordWrap = True
-    OnClick = GuideLabelClick
   end
   object Label3: TLabel
     Left = 16
@@ -79,7 +78,6 @@ object Form1: TForm1
     Top = 48
     Width = 84
     Caption = 'Included Letters'
-    OnClick = Label3Click
   end
   object Label4: TLabel
     Left = 16
@@ -87,6 +85,14 @@ object Form1: TForm1
     Top = 80
     Width = 86
     Caption = 'Excluded Letters'
-    OnClick = Label4Click
+  end
+  object ClearButton: TButton
+    Left = 200
+    Height = 25
+    Top = 183
+    Width = 75
+    Caption = 'Clear all'
+    TabOrder = 5
+    OnClick = ClearButtonClick
   end
 end

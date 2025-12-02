@@ -188,9 +188,10 @@ begin
 
   { conflictingLetters := upperCase(conflictingLetters); }
 
-  showWarning(
-    'Warning: Letters ' + conflictingLetters + ' are both excluded ' +
-    'and included. Results may be unexpected.');
+  if conflictingLetters <> '' then
+    showWarning(
+      'Warning: Letters ' + conflictingLetters + ' are both excluded ' +
+      'and included. Results may be unexpected.');
 
   currentWordList := TStringList.create;
   currentWordList.assign(wordList);

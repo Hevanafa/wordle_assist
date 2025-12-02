@@ -86,8 +86,9 @@ end;
 
 procedure TForm1.SearchButtonClick(Sender: TObject);
 var
-  greenTerm, includeTerm: string;
+  greenTerm, includeTerm, excludeTerm: string;
   a: word;
+  idx: integer;
   skip: boolean;
   c: char;
   entry: string;
@@ -140,10 +141,24 @@ begin
     currentWordList.assign(nextWordList);
   end;
 
+  { TODO: Excluded letters }
+  excludeTerm := upperCase(ExcludesEdit.text);
+
+  for c in excludeTerm do
+    for entry in currentWordList do
+      if pos(c, entry) > 0 then begin
+        idx := currentWordList.indexOf(entry);
+        currentWordList.delete(idx);
+        break
+      end;
+
+  { Result }
   ResultCountLabel.caption := 'Found ' + intToStr(currentWordList.count) + ' words';
 
-  for entry in currentWordList do
-    ResultsMemo.lines.add(entry);
+  { for entry in currentWordList do
+    ResultsMemo.lines.add(entry); }
+
+  ResultsMemo.lines.addStrings(currentWordList);
 
   nextWordList.free;
   nextWordList := nil;

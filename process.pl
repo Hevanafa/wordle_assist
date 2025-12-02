@@ -1,3 +1,8 @@
+# Process Script
+# By Hevanafa, 02-12-2025
+
+# This script produces a TXT file based on the word list TWL06.txt
+
 use strict;
 use warnings;
 use 5.32.1;

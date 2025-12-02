@@ -175,13 +175,17 @@ begin
   end;
 
   { Check excluded }
+  greenTerm := upperCase(GreenEdit.text);
+  includeTerm := upperCase(IncludesEdit.text);
+  excludeTerm := upperCase(ExcludesEdit.text);
+
   conflictingLetters := '';
 
-  for c in upperCase(ExcludesEdit.text) do begin
-    if pos(c, upperCase(GreenEdit.text)) > 0 then
+  for c in excludeTerm do begin
+    if pos(c, greenTerm) > 0 then
       conflictingLetters := conflictingLetters + c;
 
-    if (pos(c, upperCase(IncludesEdit.text)) > 0) and
+    if (pos(c, includeTerm) > 0) and
       (pos(c, conflictingLetters) = 0) then
       conflictingLetters := conflictingLetters + c;
   end;
@@ -200,8 +204,6 @@ begin
   ResultsMemo.lines.clear;
 
   { Correct letters }
-  greenTerm := upperCase(GreenEdit.text);
-  
   for entry in currentWordList do begin
     skip := false;
     
@@ -222,8 +224,6 @@ begin
   nextWordList.clear;
 
   { Included letters }
-  includeTerm := upperCase(IncludesEdit.text);
-
   for c in includeTerm do begin
     nextWordList.clear;
 
@@ -236,7 +236,6 @@ begin
   end;
 
   { Excluded letters }
-  excludeTerm := upperCase(ExcludesEdit.text);
   nextWordList.clear;
 
   for entry in currentWordList do begin

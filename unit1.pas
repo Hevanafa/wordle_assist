@@ -7,7 +7,8 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls;
+  Classes, SysUtils, Forms, Controls,
+  Graphics, Dialogs, StdCtrls;
 
 type
 
@@ -138,6 +139,7 @@ end;
 procedure TForm1.SearchButtonClick(Sender: TObject);
 var
   greenTerm, includeTerm, excludeTerm: string;
+  conflictingLetters: string;
   a: word;
   skip: boolean;
   c: char;
@@ -171,6 +173,19 @@ begin
     ExcludesEdit.setFocus;
     exit
   end;
+
+  { TODO: Check excluded }
+  conflictingLetters := '';
+
+  for c in ExcludesEdit.text do
+    if pos(c, GreenEdit.text) > 0 then
+      conflictingLetters := conflictingLetters + c;
+
+  conflictingLetters := upperCase(conflictingLetters);
+
+  showWarning(
+    'Warning: Letters ' + conflictingLetters + ' are both excluded ' +
+    'and included. Results may be unexpected.');
 
   currentWordList := TStringList.create;
   currentWordList.assign(wordList);

@@ -105,5 +105,6 @@ object Form1: TForm1
     Color = clYellow
     ParentColor = False
     Transparent = False
+    WordWrap = True
   end
 end

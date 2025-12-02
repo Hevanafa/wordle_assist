@@ -12,6 +12,7 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    ResultCountLabel: TLabel;
     SearchButton: TButton;
     ExcludesEdit: TEdit;
     IncludesEdit: TEdit;
@@ -91,6 +92,8 @@ begin
     currentWordList.clear;
     currentWordList.assign(nextWordList);
   end;
+
+  ResultCountLabel.caption := 'Found ' + intToStr(currentWordList.count) + ' words';
 
   for entry in currentWordList do
     ResultsMemo.lines.add(entry);

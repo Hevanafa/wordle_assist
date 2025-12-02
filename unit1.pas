@@ -63,6 +63,7 @@ end;
 
 procedure TForm1.SearchButtonClick(Sender: TObject);
 var
+  includeTerm: string;
   c: char;
   entry: string;
   currentWordList, nextWordList: TStringList;
@@ -72,20 +73,20 @@ begin
     exit
   end;
 
+  includeTerm := upperCase(IncludesEdit.text);
+
   currentWordList := TStringList.create;
   currentWordList.assign(wordList);
   nextWordList := TStringList.create;
 
   ResultsMemo.lines.clear;
 
-  for c in IncludesEdit.text do begin
+  for c in includeTerm do begin
     nextWordList.clear;
 
-    for entry in currentWordList do begin
-      { TODO: How to check if char is in a string }
-      if c in entry then
+    for entry in currentWordList do
+      if pos(c, entry) > 0 then
         nextWordList.add(entry);
-    end;
 
     currentWordList.clear;
     currentWordList.assign(nextWordList);

@@ -104,6 +104,32 @@ begin
     end;
 end;
 
+function TForm1.validateIncludeTerm: boolean;
+var
+  c: char;
+begin
+  validateIncludeTerm := true;
+
+  for c in lowerCase(IncludesEdit.text) do
+    if not (c in ['a'..'z']) then begin
+      validateIncludeTerm := false;
+      exit
+    end;
+end;
+
+function TForm1.validateExcludeTerm: boolean;
+var
+  c: char;
+begin
+  validateExcludeTerm := true;
+
+  for c in lowerCase(IncludesEdit.text) do
+    if not (c in ['a'..'z']) then begin
+      validateExcludeTerm := false;
+      exit
+    end;
+end;
+
 procedure TForm1.SearchButtonClick(Sender: TObject);
 var
   greenTerm, includeTerm, excludeTerm: string;
@@ -118,6 +144,25 @@ begin
     exit
   end;
 
+  if not validateGreenTerm then begin
+    showMessage('Only letters & underscores are allowed');
+    GreenEdit.setFocus;
+    exit
+  end;
+
+  if not validateIncludeTerm then begin
+    showMessage('Only letters are allowed');
+    IncludesEdit.setFocus;
+    exit
+  end;
+
+  if not validateExcludeTerm then begin
+    showMessage('Only letters are allowed');
+    ExcludesEdit.setFocus;
+    exit
+  end;
+
+
   currentWordList := TStringList.create;
   currentWordList.assign(wordList);
   nextWordList := TStringList.create;
@@ -125,12 +170,6 @@ begin
   ResultsMemo.lines.clear;
 
   { Correct letters }
-  if not validateGreenTerm then begin
-    showMessage('Only letters & underscores are allowed');
-    GreenEdit.setFocus;
-    exit
-  end;
-
   greenTerm := upperCase(GreenEdit.text);
   
   for entry in currentWordList do begin

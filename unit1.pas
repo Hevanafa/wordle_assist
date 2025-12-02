@@ -174,14 +174,19 @@ begin
     exit
   end;
 
-  { TODO: Check excluded }
+  { Check excluded }
   conflictingLetters := '';
 
-  for c in ExcludesEdit.text do
-    if pos(c, GreenEdit.text) > 0 then
+  for c in upperCase(ExcludesEdit.text) do begin
+    if pos(c, upperCase(GreenEdit.text)) > 0 then
       conflictingLetters := conflictingLetters + c;
 
-  conflictingLetters := upperCase(conflictingLetters);
+    if (pos(c, upperCase(IncludesEdit.text)) > 0) and
+      (pos(c, conflictingLetters) = 0) then
+      conflictingLetters := conflictingLetters + c;
+  end;
+
+  { conflictingLetters := upperCase(conflictingLetters); }
 
   showWarning(
     'Warning: Letters ' + conflictingLetters + ' are both excluded ' +

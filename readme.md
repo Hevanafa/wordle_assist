@@ -1,5 +1,7 @@
 #
 
+![preview](./preview.png)
+
 ## Requirements
 
 - Lazarus IDE (v3.6 at the time of writing)

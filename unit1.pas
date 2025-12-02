@@ -1,6 +1,8 @@
 unit Unit1;
 
-{$mode objfpc}{$H+}
+{$Mode ObjFPC}
+{$H+}
+{$B-}
 
 interface
 
@@ -30,7 +32,7 @@ type
     procedure SearchButtonClick(Sender: TObject);
   private
     wordList: TStringList;
-    function validateEmpty: boolean;
+    function validateNotEmpty: boolean;
     function validateGreenTerm: boolean;
     function validateLettersOnly(const term: string): boolean;
   public
@@ -79,9 +81,9 @@ begin
   { showMessage('Loaded ' + intToStr(wordlist.count) + ' words') }
 end;
 
-function TForm1.validateEmpty: boolean;
+function TForm1.validateNotEmpty: boolean;
 begin
-  validateEmpty := not((length(GreenEdit.text) > 0) and (length(IncludesEdit.text) > 0))
+  validateNotEmpty := (length(GreenEdit.text) > 0) or (length(IncludesEdit.text) > 0)
 end;
 
 function TForm1.validateGreenTerm: boolean;
@@ -120,8 +122,9 @@ var
   currentWordList, nextWordList: TStringList;
 begin
   { Handle validation }
-  if not validateEmpty then begin
+  if not validateNotEmpty then begin
     showMessage('At least 1 input box must be filled');
+    GreenEdit.setFocus;
     exit
   end;
 

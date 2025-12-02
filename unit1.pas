@@ -17,6 +17,7 @@ type
     ClearButton: TButton;
     Label1: TLabel;
     GuideLabel: TLabel;
+    WarningLabel: TLabel;
     Label3: TLabel;
     Label4: TLabel;
     ResultCountLabel: TLabel;
@@ -32,6 +33,8 @@ type
     procedure SearchButtonClick(Sender: TObject);
   private
     wordList: TStringList;
+    procedure showWarning(const msg: string);
+    procedure hideWarning;
     function validateNotEmpty: boolean;
     function validateGreenTerm: boolean;
     function validateLettersOnly(const term: string): boolean;
@@ -64,11 +67,15 @@ begin
   GreenEdit.clear;
   IncludesEdit.clear;
   ExcludesEdit.clear;
-  ResultsMemo.clear
+  ResultsMemo.clear;
+
+  hideWarning
 end;
 
 procedure TForm1.FormShow(Sender: TObject);
 begin
+  WarningLabel.visible := false;
+
   wordList := TStringList.create;
 
   try
@@ -112,6 +119,22 @@ begin
     end;
 end;
 
+procedure TForm1.showWarning(const msg: string);
+begin
+  WarningLabel.caption := msg;
+  WarningLabel.visible := true;
+
+  WarningLabel.top := GuideLabel.top;
+  WarningLabel.left := GuideLabel.left;
+  WarningLabel.width := GuideLabel.width;
+  WarningLabel.height := GuideLabel.height
+end;
+
+procedure TForm1.hideWarning;
+begin
+  WarningLabel.visible := false;
+end;
+
 procedure TForm1.SearchButtonClick(Sender: TObject);
 var
   greenTerm, includeTerm, excludeTerm: string;
@@ -121,6 +144,9 @@ var
   entry: string;
   currentWordList, nextWordList: TStringList;
 begin
+  hideWarning;
+  { showWarning('Test warning'); }
+
   { Handle validation }
   if not validateNotEmpty then begin
     showMessage('At least 1 input box must be filled');

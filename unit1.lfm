@@ -95,4 +95,15 @@ object Form1: TForm1
     TabOrder = 5
     OnClick = ClearButtonClick
   end
+  object WarningLabel: TLabel
+    Left = 288
+    Height = 15
+    Top = 216
+    Width = 184
+    AutoSize = False
+    Caption = 'WarningLabel'
+    Color = clYellow
+    ParentColor = False
+    Transparent = False
+  end
 end

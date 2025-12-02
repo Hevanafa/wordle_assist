@@ -20,6 +20,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure SearchButtonClick(Sender: TObject);
   private
     wordList: TStringList;
   public
@@ -58,6 +59,45 @@ begin
   end;
 
   { showMessage('Loaded ' + intToStr(wordlist.count) + ' words') }
+end;
+
+procedure TForm1.SearchButtonClick(Sender: TObject);
+var
+  c: char;
+  entry: string;
+  currentWordList, nextWordList: TStringList;
+begin
+  if (length(GreenEdit.text) = 0) and (length(IncludesEdit.text) = 0) then begin
+    showMessage('At least 1 input box must be filled');
+    exit
+  end;
+
+  currentWordList := TStringList.create;
+  currentWordList.assign(wordList);
+  nextWordList := TStringList.create;
+
+  ResultsMemo.lines.clear;
+
+  for c in IncludesEdit.text do begin
+    nextWordList.clear;
+
+    for entry in currentWordList do begin
+      { TODO: How to check if char is in a string }
+      if c in entry then
+        nextWordList.add(entry);
+    end;
+
+    currentWordList.clear;
+    currentWordList.assign(nextWordList);
+  end;
+
+  for entry in currentWordList do
+    ResultsMemo.lines.add(entry);
+
+  nextWordList.free;
+  nextWordList := nil;
+  currentWordList.free;
+  currentWordList := nil
 end;
 
 end.

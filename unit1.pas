@@ -12,6 +12,10 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    Label1: TLabel;
+    GuideLabel: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
     ResultCountLabel: TLabel;
     SearchButton: TButton;
     ExcludesEdit: TEdit;
@@ -21,6 +25,9 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure GuideLabelClick(Sender: TObject);
+    procedure Label3Click(Sender: TObject);
+    procedure Label4Click(Sender: TObject);
     procedure SearchButtonClick(Sender: TObject);
   private
     wordList: TStringList;
@@ -60,6 +67,21 @@ begin
   end;
 
   { showMessage('Loaded ' + intToStr(wordlist.count) + ' words') }
+end;
+
+procedure TForm1.GuideLabelClick(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.Label3Click(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.Label4Click(Sender: TObject);
+begin
+
 end;
 
 procedure TForm1.SearchButtonClick(Sender: TObject);

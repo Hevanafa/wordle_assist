@@ -2,30 +2,30 @@ object Form1: TForm1
   Left = 349
   Height = 240
   Top = 200
-  Width = 320
+  Width = 480
   Caption = 'Form1'
   ClientHeight = 240
-  ClientWidth = 320
+  ClientWidth = 480
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
   LCLVersion = '3.6.0.0'
   object GreenEdit: TEdit
-    Left = 8
+    Left = 112
     Height = 23
     Top = 8
     Width = 80
     TabOrder = 0
   end
   object IncludesEdit: TEdit
-    Left = 8
+    Left = 112
     Height = 23
     Top = 40
     Width = 80
     TabOrder = 1
   end
   object ExcludesEdit: TEdit
-    Left = 8
+    Left = 112
     Height = 23
     Top = 72
     Width = 80
@@ -35,12 +35,12 @@ object Form1: TForm1
     Left = 8
     Height = 104
     Top = 104
-    Width = 160
+    Width = 184
     ScrollBars = ssVertical
     TabOrder = 3
   end
   object SearchButton: TButton
-    Left = 96
+    Left = 200
     Height = 25
     Top = 72
     Width = 75
@@ -54,5 +54,38 @@ object Form1: TForm1
     Top = 216
     Width = 53
     Caption = 'Welcome!'
+  end
+  object Label1: TLabel
+    Left = 16
+    Height = 15
+    Top = 16
+    Width = 77
+    Caption = 'Correct Letters'
+  end
+  object GuideLabel: TLabel
+    Left = 288
+    Height = 223
+    Top = 8
+    Width = 184
+    AutoSize = False
+    Caption = 'Use underscores if you''re not sure what letter it is'#13#10#13#10'Examples:'#13#10'_I_C'#13#10'_A_E_'#13#10'H_I'#13#10#13#10'Uppercase or lowercase? Doesn''t matter'#13#10#13#10'Included letters: Letters in yellow'#13#10'Excluded letters: Letters in grey'
+    WordWrap = True
+    OnClick = GuideLabelClick
+  end
+  object Label3: TLabel
+    Left = 16
+    Height = 15
+    Top = 48
+    Width = 84
+    Caption = 'Included Letters'
+    OnClick = Label3Click
+  end
+  object Label4: TLabel
+    Left = 16
+    Height = 15
+    Top = 80
+    Width = 86
+    Caption = 'Excluded Letters'
+    OnClick = Label4Click
   end
 end

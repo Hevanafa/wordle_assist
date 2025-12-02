@@ -3,7 +3,7 @@ object Form1: TForm1
   Height = 240
   Top = 195
   Width = 480
-  Caption = 'Form1'
+  Caption = 'Wordle Assist - By Hevanafa (02-12-2025)'
   ClientHeight = 240
   ClientWidth = 480
   OnClose = FormClose

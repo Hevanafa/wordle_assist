@@ -31,6 +31,8 @@ type
     procedure SearchButtonClick(Sender: TObject);
   private
     wordList: TStringList;
+    function validateEmpty: boolean;
+    function validateGreenTerm: boolean;
   public
 
   end;
@@ -84,17 +86,34 @@ begin
 
 end;
 
+function TForm1.validateEmpty: boolean;
+begin
+  validateEmpty := not((length(GreenEdit.text) > 0) and (length(IncludesEdit.text) > 0))
+end;
+
+function TForm1.validateGreenTerm: boolean;
+var
+  c: char;
+begin
+  validateGreenTerm := true;
+
+  for c in GreenEdit.text do
+    if not (c in ['A'..'Z', 'a'..'z', '_']) then begin
+      validateGreenTerm := false;
+      exit
+    end;
+end;
+
 procedure TForm1.SearchButtonClick(Sender: TObject);
 var
   greenTerm, includeTerm, excludeTerm: string;
   a: word;
-  idx: integer;
   skip: boolean;
   c: char;
   entry: string;
   currentWordList, nextWordList: TStringList;
 begin
-  if (length(GreenEdit.text) = 0) and (length(IncludesEdit.text) = 0) then begin
+  if not validateEmpty then begin
     showMessage('At least 1 input box must be filled');
     exit
   end;
@@ -106,6 +125,12 @@ begin
   ResultsMemo.lines.clear;
 
   { Correct letters }
+  if not validateGreenTerm then begin
+    showMessage('Only letters & underscores are allowed');
+    GreenEdit.setFocus;
+    exit
+  end;
+
   greenTerm := upperCase(GreenEdit.text);
   
   for entry in currentWordList do begin

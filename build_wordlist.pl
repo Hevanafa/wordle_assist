@@ -1,4 +1,4 @@
-# Process Script
+# Build Word List Script
 # By Hevanafa, 02-12-2025
 
 # This script produces a TXT file based on the word list TWL06.txt

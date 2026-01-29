@@ -2,7 +2,7 @@ unit Unit1;
 
 {$Mode ObjFPC}
 {$H+}
-{$B-}
+{$J-}
 {$ModeSwitch AdvancedRecords}
 {$Notes OFF}
 
@@ -35,7 +35,6 @@ type
     IncludesEdit: TEdit;
     GreenEdit: TEdit;
     ResultsMemo: TMemo;
-    function findFrequency(const term: string): longword;
     procedure ClearButtonClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -44,6 +43,7 @@ type
     procedure Label3Click(Sender: TObject);
     procedure Label4Click(Sender: TObject);
     procedure SearchButtonClick(Sender: TObject);
+
   private
     wordList: TStringList;
     frequencyList: specialize TFPGList<TFrequencyPair>;
@@ -53,6 +53,8 @@ type
     function validateNotEmpty: boolean;
     function validateGreenTerm: boolean;
     function validateLettersOnly(const term: string): boolean;
+
+    function findFrequency(const term: string): longword;
   public
 
   end;
@@ -206,6 +208,16 @@ begin
     end;
 end;
 
+function compareFrequencyPair(const a, b: TFrequencyPair): longint;
+begin
+  if a.frequency < b.frequency then
+    result := 1
+  else if a.frequency > b.frequency then
+    result := -1
+  else
+    result := 0;
+end;
+
 procedure TForm1.SearchButtonClick(Sender: TObject);
 var
   greenTerm, includeTerm, excludeTerm: string;
@@ -215,7 +227,10 @@ var
   c: char;
   entry: string;
   currentWordList, nextWordList: TStringList;
+
   useFrequencyList: boolean;
+  freqpair: TFrequencyPair;
+  sortedFrequencyList: specialize TFPGList<TFrequencyPair>;
 begin
   hideWarning;
   { showWarning('Test warning'); }
@@ -322,24 +337,36 @@ begin
       nextWordList.add(entry);
   end;
 
-  currentWordList.clear;
+  { Apply sorting with frequency list }
 
-  if useFrequencyList then
+  { if useFrequencyList then
     for a:=0 to nextWordList.count-1 do
-      nextWordList[a] := format('%s (%d)', [nextWordList[a], findFrequency(nextWordList[a])]);
+      nextWordList[a] := format('%s (%d)', [nextWordList[a], findFrequency(nextWordList[a])]); }
 
+  if useFrequencyList then begin
+    sortedFrequencyList := specialize TFPGList<TFrequencyPair>.create;
+
+    for a:=0 to nextWordList.count-1 do begin
+      freqpair.term := nextWordList[a];
+      freqpair.frequency := findFrequency(nextWordList[a]);
+      sortedFrequencyList.Add(freqpair)
+    end;
+
+    sortedFrequencyList.Sort(@compareFrequencyPair);
+
+    for a:=0 to sortedFrequencyList.count-1 do
+      nextWordList[a] := format('%s  (%d)', [sortedFrequencyList[a].term, sortedFrequencyList[a].frequency]);
+
+    FreeAndNil(sortedFrequencyList)
+  end;
+
+  currentWordList.clear;
   currentWordList.assign(nextWordList);
 
 
   { Result }
   ResultCountLabel.caption := 'Found ' + intToStr(currentWordList.count) + ' words';
-
-  { for entry in currentWordList do
-    ResultsMemo.lines.add(entry); }
-
   ResultsMemo.lines.addStrings(currentWordList);
-
-  { TODO: handle sort by frequency list }
 
   FreeAndNil(nextWordList);
   FreeAndNil(currentWordList);

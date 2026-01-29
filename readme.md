@@ -13,7 +13,8 @@
 
 ## Building
 
-- Make sure `words_5letters.txt` is already built
+- Build the word lists with Perl: `build_wordlist.pl` and `build_freqlist.pl`
+- Make sure `words_5letters.txt` and `freqlist_5letters.txt` are already built
 - Open `project.lpi` with Lazarus IDE
 - Change build mode to Release
 - Build & Run

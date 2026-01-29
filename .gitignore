@@ -2,10 +2,11 @@
 backup/
 lib/x86_64-win64/
 *.exe
+*.lps
 
 # Word lists
 TWL06.txt
 words_5letters.txt
 
-freqlist.txt
-project.lps
+count_1w.txt
+freqlist_5letters.txt

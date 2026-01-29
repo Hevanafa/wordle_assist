@@ -593,6 +593,8 @@ object Form1: TForm1
     Top = 104
     Width = 111
     Caption = 'Use &frequency list'
+    Checked = True
+    State = cbChecked
     TabOrder = 6
   end
 end

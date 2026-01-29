@@ -35,6 +35,7 @@ type
     IncludesEdit: TEdit;
     GreenEdit: TEdit;
     ResultsMemo: TMemo;
+    function findFrequency(const term: string): longword;
     procedure ClearButtonClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -117,9 +118,9 @@ begin
 
   while not eof(f) do begin
     readln(f, line);
-    parts := line.Split(',');
+    parts := line.Split(#9);
 
-    freqpair.term := parts[0];
+    freqpair.term := upcase(parts[0]);
     freqpair.frequency := StrToInt(parts[1]);
 
     frequencyList.Add(freqpair)
@@ -192,6 +193,19 @@ begin
   WarningLabel.visible := false;
 end;
 
+function TForm1.findFrequency(const term: string): longword;
+var
+  item: TFrequencyPair;
+begin
+  result := 0;
+
+  for item in frequencyList do
+    if item.term = term then begin
+      result := item.frequency;
+      exit
+    end;
+end;
+
 procedure TForm1.SearchButtonClick(Sender: TObject);
 var
   greenTerm, includeTerm, excludeTerm: string;
@@ -235,6 +249,8 @@ begin
   greenTerm := upperCase(GreenEdit.text);
   includeTerm := upperCase(IncludesEdit.text);
   excludeTerm := upperCase(ExcludesEdit.text);
+
+  useFrequencyList := FrequencyListCheckBox.Checked;
 
   conflictingLetters := '';
 
@@ -307,6 +323,11 @@ begin
   end;
 
   currentWordList.clear;
+
+  if useFrequencyList then
+    for a:=0 to nextWordList.count-1 do
+      nextWordList[a] := format('%s (%d)', [nextWordList[a], findFrequency(nextWordList[a])]);
+
   currentWordList.assign(nextWordList);
 
 
@@ -318,8 +339,7 @@ begin
 
   ResultsMemo.lines.addStrings(currentWordList);
 
-  { TODO: handle the frequency list }
-  useFrequencyList := FrequencyListCheckBox.Checked;
+  { TODO: handle sort by frequency list }
 
   FreeAndNil(nextWordList);
   FreeAndNil(currentWordList);

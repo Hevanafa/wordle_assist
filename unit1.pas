@@ -15,6 +15,7 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    FrequencyListCheckBox: TCheckBox;
     ClearButton: TButton;
     Label1: TLabel;
     GuideLabel: TLabel;
@@ -31,6 +32,9 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure Label1Click(Sender: TObject);
+    procedure Label3Click(Sender: TObject);
+    procedure Label4Click(Sender: TObject);
     procedure SearchButtonClick(Sender: TObject);
   private
     wordList: TStringList;
@@ -87,6 +91,21 @@ begin
   end;
 
   { showMessage('Loaded ' + intToStr(wordlist.count) + ' words') }
+end;
+
+procedure TForm1.Label1Click(Sender: TObject);
+begin
+  GreenEdit.SetFocus;
+end;
+
+procedure TForm1.Label3Click(Sender: TObject);
+begin
+  IncludesEdit.SetFocus;
+end;
+
+procedure TForm1.Label4Click(Sender: TObject);
+begin
+  ExcludesEdit.SetFocus;
 end;
 
 function TForm1.validateNotEmpty: boolean;
@@ -189,8 +208,6 @@ begin
       (pos(c, conflictingLetters) = 0) then
       conflictingLetters := conflictingLetters + c;
   end;
-
-  { conflictingLetters := upperCase(conflictingLetters); }
 
   if conflictingLetters <> '' then
     showWarning(

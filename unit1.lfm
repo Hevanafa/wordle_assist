@@ -1,9 +1,11 @@
 object Form1: TForm1
-  Left = 387
+  Left = 440
   Height = 240
-  Top = 195
+  Top = 200
   Width = 480
-  Caption = 'Wordle Assist - By Hevanafa (02-12-2025)'
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Wordle Assist - By Hevanafa (Jan 2026)'
   ClientHeight = 240
   ClientWidth = 480
   Icon.Data = {
@@ -485,7 +487,6 @@ object Form1: TForm1
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '3.6.0.0'
   object GreenEdit: TEdit
     Left = 112
     Height = 23

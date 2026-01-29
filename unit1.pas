@@ -3,16 +3,23 @@ unit Unit1;
 {$Mode ObjFPC}
 {$H+}
 {$B-}
+{$ModeSwitch AdvancedRecords}
+{$Notes OFF}
 
 interface
 
 uses
   Classes, SysUtils, Forms, Controls,
-  Graphics, Dialogs, StdCtrls;
+  Graphics, Dialogs, StdCtrls,
+  FGL, StrUtils;
 
 type
+  TFrequencyPair = record
+    term: String[5];
+    frequency: longword;
 
-  { TForm1 }
+    class operator =(a, b: TFrequencyPair): boolean;
+  end;
 
   TForm1 = class(TForm)
     FrequencyListCheckBox: TCheckBox;
@@ -38,6 +45,8 @@ type
     procedure SearchButtonClick(Sender: TObject);
   private
     wordList: TStringList;
+    frequencyList: specialize TFPGList<TFrequencyPair>;
+
     procedure showWarning(const msg: string);
     procedure hideWarning;
     function validateNotEmpty: boolean;
@@ -54,6 +63,11 @@ implementation
 
 {$R *.lfm}
 
+class operator TFrequencyPair.= (a, b: TFrequencyPair): boolean;
+begin
+  result := (a.term = b.term) and (a.frequency = b.frequency)
+end;
+
 { TForm1 }
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -63,8 +77,8 @@ end;
 
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  wordList.free;
-  wordList := nil;
+  FreeAndNil(wordList);
+  FreeAndNil(frequencyList);
 end;
 
 procedure TForm1.ClearButtonClick(Sender: TObject);
@@ -78,6 +92,11 @@ begin
 end;
 
 procedure TForm1.FormShow(Sender: TObject);
+var
+  f: text;
+  freqpair: TFrequencyPair;
+  line: string;
+  parts: array of string;
 begin
   WarningLabel.visible := false;
 
@@ -89,6 +108,24 @@ begin
     on e: Exception do
       showMessage('Error loading file: ' + e.message);
   end;
+
+  { Load the word frequency list }
+
+  frequencyList := specialize TFPGList<TFrequencyPair>.create;
+  AssignFile(f, 'freqlist_5letters.txt');
+  {$I-} reset(f); {$I+}
+
+  while not eof(f) do begin
+    readln(f, line);
+    parts := line.Split(',');
+
+    freqpair.term := parts[0];
+    freqpair.frequency := StrToInt(parts[1]);
+
+    frequencyList.Add(freqpair)
+  end;
+
+  CloseFile(f);
 
   { showMessage('Loaded ' + intToStr(wordlist.count) + ' words') }
 end;
@@ -164,6 +201,7 @@ var
   c: char;
   entry: string;
   currentWordList, nextWordList: TStringList;
+  useFrequencyList: boolean;
 begin
   hideWarning;
   { showWarning('Test warning'); }
@@ -280,10 +318,11 @@ begin
 
   ResultsMemo.lines.addStrings(currentWordList);
 
-  nextWordList.free;
-  nextWordList := nil;
-  currentWordList.free;
-  currentWordList := nil
+  { TODO: handle the frequency list }
+  useFrequencyList := FrequencyListCheckBox.Checked;
+
+  FreeAndNil(nextWordList);
+  FreeAndNil(currentWordList);
 end;
 
 end.

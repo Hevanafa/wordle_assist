@@ -1,4 +1,6 @@
-#
+# Wordle Assist
+
+A native desktop utility designed to crack the Wordle code. Using the speed of Lazarus and Pascal, this tool processes word lists alongside the frequency data to narrow down the most probable words based on the input clues
 
 ![Preview (Jan 2026)](./preview_jan_2026.png)
 

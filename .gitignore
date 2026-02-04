@@ -4,6 +4,7 @@ lib/x86_64-win64/
 dist/
 *.exe
 *.lps
+*.dbg
 
 # Word lists
 # TWL06.txt
@@ -12,3 +13,4 @@ dist/
 # Processed word lists
 words_5letters.txt
 freqlist_5letters.txt
+

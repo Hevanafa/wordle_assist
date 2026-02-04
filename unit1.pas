@@ -343,7 +343,7 @@ begin
     for a:=0 to nextWordList.count-1 do
       nextWordList[a] := format('%s (%d)', [nextWordList[a], findFrequency(nextWordList[a])]); }
 
-  if useFrequencyList then begin
+  if useFrequencyList and (nextWordList.Count > 0) then begin
     sortedFrequencyList := specialize TFPGList<TFrequencyPair>.create;
 
     for a:=0 to nextWordList.count-1 do begin
